@@ -4,7 +4,7 @@ Proyecto de automatización de pruebas End-to-End (E2E) desarrollado para la pla
 
 ---
 
-## 🛠️ Tecnologías Requeridas
+##  Tecnologías Requeridas
 * **Lenguaje principal:** Python 3.14
 * **Herramienta de automatización:** Selenium WebDriver (Selenium 4 con Selenium Manager)
 * **Framework de pruebas:** Pytest
@@ -13,28 +13,7 @@ Proyecto de automatización de pruebas End-to-End (E2E) desarrollado para la pla
 
 ---
 
-## 📂 Estructura del Proyecto
-
-pre-entrega-automation-testing-erika-silverio/
-│
-├── tests/
-│   └── test_saucedemo.py       # Casos de prueba (Login, Catálogo y Carrito)
-│
-├── utils/
-│   ├── __init__.py             # Identificador de paquete
-│   └── helpers.py              # Funciones auxiliares (driver, esperas explícitas, logs, capturas)
-│
-├── reports/
-│   ├── reporte.html            # Reporte visual en HTML
-│   └── ejecucion.log           # Log detallado de la suite
-│
-├── pytest.ini                  # Configuración global de Pytest y PYTHONPATH
-├── requirements.txt            # Lista de dependencias
-└── README.md                   # Documentación del proyecto
-
----
-
-## 🚀 Pasos para Instalación y Configuración
+##  Pasos para Instalación y Configuración
 
 1. **Clonar el repositorio:**
    git clone https://github.com/erikasilverio/pre-entrega-automation-testing-erika-silverio.git
