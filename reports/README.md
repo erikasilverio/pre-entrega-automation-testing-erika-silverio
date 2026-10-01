@@ -38,6 +38,21 @@ La suite de pruebas está dividida en 3 casos de prueba independientes y automat
    * **Verificación:** Valida que el contador del icono del carrito cambie a `1` y confirma que el producto figure listado dentro de `/cart.html`.
 
 ---
+1. Abrir Terminal       
+
+2. Activar Entorno  -->  .\venv\Scripts\activate  (Windows)
+
+
+3. Instalar Paquetes -->  python -m pip install -r requirements.txt
+
+
+4. Ejecutar Pruebas -->  pytest tests/test_saucedemo.py -v --html=reports/reporte.html
+
+
+5. Revisar Resultados -->  Abrir reports/reporte.html
+
+
+--------------
 
 ## 📂 Estructura del Proyecto
 

@@ -1,59 +1,70 @@
 import os
 import logging
+from datetime import datetime
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# Configuración del sistema de Logging para generar el archivo de logs de ejecución
-os.makedirs("reports", exist_ok=True)
-logging.basicConfig(
-    filename=os.path.join("reports", "ejecucion.log"),
-    level=logging.INFO,
-    format="%(asctime)s - [%(levelname)s] - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-    encoding="utf-8"
-)
-
-def get_logger():
-    """Retorna el logger configurado para registrar eventos en la prueba."""
-    return logging.getLogger("SauceDemoTest")
-
-def get_driver():
-    """Inicializa la instancia de Chrome WebDriver con opciones optimizadas."""
-    logger = get_logger()
-    logger.info("Inicializando el navegador Chrome...")
-    options = webdriver.ChromeOptions()
-    options.add_argument("--start-maximized")        # Ventana maximizada
-    options.add_argument("--disable-notifications")  # Desactivar notificaciones emergentes
-    return webdriver.Chrome(options=options)
-
-def wait_for_element(driver, locator, timeout=10):
-    """Espera explícita hasta que un elemento sea interactuable (clickable)."""
-    logger = get_logger()
-    logger.info(f"Esperando que el elemento sea interactuable: {locator}")
-    return WebDriverWait(driver, timeout).until(
-        EC.element_to_be_clickable(locator),
-        message=f"El elemento no estuvo listo para clic a tiempo: {locator}"
-    )
-
-def wait_for_visibility(driver, locator, timeout=10):
-    """Espera explícita hasta que un elemento sea visible en pantalla."""
-    logger = get_logger()
-    logger.info(f"Esperando visibilidad del elemento: {locator}")
-    return WebDriverWait(driver, timeout).until(
-        EC.visibility_of_element_located(locator),
-        message=f"El elemento no fue visible en pantalla a tiempo: {locator}"
-    )
-
-def take_screenshot(driver, name="captura_fallo"):
+def obtener_driver():
     """
-    Guarda una captura de pantalla PNG en la carpeta /reports
-    como evidencia visual en caso de fallo.
+    Configura e inicializa el navegador Chrome maximizado utilizando Selenium Manager.
+    Evita fallos de arquitectura y compatibilidad con ChromeDriver.
     """
-    logger = get_logger()
+    opciones = webdriver.ChromeOptions()
+    opciones.add_argument("--start-maximized")
+    opciones.add_argument("--disable-notifications")
+    
+    # Selenium 4 gestiona la descarga y compatibilidad del ChromeDriver de forma automática
+    servicio = Service()
+    driver = webdriver.Chrome(service=servicio, options=opciones)
+    return driver
+
+def esperar_elemento(driver, localizador, valor, tiempo=10):
+    """
+    Espera explícita para asegurar que un elemento sea visible en el DOM antes de interactuar.
+    """
+    espera = WebDriverWait(driver, tiempo)
+    return espera.until(EC.visibility_of_element_located((localizador, valor)))
+
+def hacer_clic(driver, localizador, valor, tiempo=10):
+    """
+    Localiza un elemento en pantalla y realiza la acción de clic.
+    """
+    elemento = esperar_elemento(driver, localizador, valor, tiempo)
+    elemento.click()
+
+def escribir_texto(driver, localizador, valor, texto, tiempo=10):
+    """
+    Limpia un campo de entrada e ingresa el texto proporcionado.
+    """
+    campo = esperar_elemento(driver, localizador, valor, tiempo)
+    campo.clear()
+    campo.send_keys(texto)
+
+def obtener_logger():
+    """
+    Configura la bitácora de logs para guardar la actividad en 'reports/ejecucion.log'.
+    """
     os.makedirs("reports", exist_ok=True)
-    filepath = os.path.join("reports", f"{name}.png")
-    driver.save_screenshot(filepath)
-    logger.error(f"EVIDENCIA GENERADA: Captura guardada en {filepath}")
-    print(f"\n[EVIDENCIA] Captura guardada en: {filepath}")
-    return filepath
+    
+    logger = logging.getLogger("SauceDemoQA")
+    logger.setLevel(logging.INFO)
+
+    if not logger.handlers:
+        manejador_archivo = logging.FileHandler("reports/ejecucion.log", mode="a", encoding="utf-8")
+        formato = logging.Formatter("%(asctime)s - [%(levelname)s] - %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+        manejador_archivo.setFormatter(formato)
+        logger.addHandler(manejador_archivo)
+
+    return logger
+
+def capturar_pantalla_error(driver, nombre_evidencia):
+    """
+    Guarda una captura de pantalla PNG en la carpeta 'reports/' cuando se detecta un fallo.
+    """
+    os.makedirs("reports", exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    ruta_captura = f"reports/{nombre_evidencia}_{timestamp}.png"
+    driver.save_screenshot(ruta_captura)
+    return ruta_captura

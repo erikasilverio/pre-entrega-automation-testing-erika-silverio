@@ -1,0 +1,91 @@
+2026-09-30 21:40:32 - [INFO] - Iniciando instancia de navegador Chrome...
+2026-09-30 21:40:34 - [INFO] - Iniciando instancia de navegador Chrome...
+2026-09-30 21:40:35 - [INFO] - Iniciando instancia de navegador Chrome...
+2026-09-30 21:42:25 - [INFO] - Iniciando instancia de navegador Chrome...
+2026-09-30 21:42:27 - [INFO] - Paso 1: Ingresando a la página de login de SauceDemo
+2026-09-30 21:42:30 - [INFO] - Paso 2: Completando el formulario con el usuario 'standard_user'
+2026-09-30 21:42:33 - [INFO] - Paso 3: Enviando credenciales
+2026-09-30 21:42:35 - [INFO] - Paso 4: Verificando ingreso a la URL del inventario
+2026-09-30 21:42:35 - [INFO] - ✓ Test 01 - Login Exitoso: Completado correctamente.
+2026-09-30 21:42:37 - [INFO] - Cerrando sesión de navegador.
+2026-09-30 21:42:39 - [INFO] - Iniciando instancia de navegador Chrome...
+2026-09-30 21:42:40 - [INFO] - Paso 1: Iniciando sesión previa para inspeccionar catálogo
+2026-09-30 21:42:43 - [INFO] - Paso 2: Validando el título general de la aplicación web
+2026-09-30 21:42:43 - [INFO] - Paso 3: Verificando visibilidad del menú lateral y la sección de productos
+2026-09-30 21:42:45 - [INFO] - Paso 4: Leyendo la información del primer ítem en pantalla
+2026-09-30 21:42:45 - [INFO] - Producto detectado: 'Sauce Labs Backpack' | Precio: $29.99
+2026-09-30 21:42:45 - [INFO] - ✓ Test 02 - Navegación y Catálogo: Completado correctamente.
+2026-09-30 21:42:47 - [INFO] - Cerrando sesión de navegador.
+2026-09-30 21:42:49 - [INFO] - Iniciando instancia de navegador Chrome...
+2026-09-30 21:42:51 - [INFO] - Paso 1: Iniciando sesión de usuario
+2026-09-30 21:42:53 - [INFO] - Paso 2: Agregando el primer producto al carrito de compras
+2026-09-30 21:42:55 - [INFO] - Paso 3: Verificando actualización del contador en la insignia del carrito
+2026-09-30 21:43:06 - [ERROR] - Fallo detectado en test_03_interaccion_carrito: Message: 
+Stacktrace:
+	chromedriver!GetHandleVerifier [0x7ff742ab1035+5a95]
+	chromedriver!(No symbol) [0x7ff7429d2c70]
+	chromedriver!(No symbol) [0x7ff7427f4a7d]
+	chromedriver!(No symbol) [0x7ff74284ff91]
+	chromedriver!(No symbol) [0x7ff74285025c]
+	chromedriver!(No symbol) [0x7ff7428a2f67]
+	chromedriver!(No symbol) [0x7ff74289fbea]
+	chromedriver!(No symbol) [0x7ff742841d02]
+	chromedriver!(No symbol) [0x7ff742842b13]
+	chromedriver!GetHandleVerifier [0x7ff742ed1411+425e71]
+	chromedriver!GetHandleVerifier [0x7ff742efca47+4514a7]
+	chromedriver!GetHandleVerifier [0x7ff742ef094e+4453ae]
+	chromedriver!GetHandleVerifier [0x7ff742babf6e+1009ce]
+	chromedriver!(No symbol) [0x7ff7429e0a05]
+	chromedriver!(No symbol) [0x7ff7429dbcf4]
+	chromedriver!(No symbol) [0x7ff7429dbe84]
+	chromedriver!(No symbol) [0x7ff7429c66ac]
+	KERNEL32!BaseThreadInitThunk [0x7fff7a1ecd87+17]
+	ntdll!RtlUserThreadStart [0x7fff7b5acaec+2c]
+
+2026-09-30 21:43:08 - [INFO] - Cerrando sesión de navegador.
+2026-09-30 21:44:40 - [INFO] - Iniciando instancia de navegador Chrome...
+2026-09-30 21:44:41 - [INFO] - Paso 1: Ingresando a la página de login de SauceDemo
+2026-09-30 21:44:44 - [INFO] - Paso 2: Completando el formulario con el usuario 'standard_user'
+2026-09-30 21:44:47 - [INFO] - Paso 3: Enviando credenciales
+2026-09-30 21:44:49 - [INFO] - Paso 4: Verificando ingreso a la URL del inventario
+2026-09-30 21:44:49 - [INFO] - ✓ Test 01 - Login Exitoso: Completado correctamente.
+2026-09-30 21:44:51 - [INFO] - Cerrando sesión de navegador.
+2026-09-30 21:44:54 - [INFO] - Iniciando instancia de navegador Chrome...
+2026-09-30 21:44:55 - [INFO] - Paso 1: Iniciando sesión previa para inspeccionar catálogo
+2026-09-30 21:44:58 - [INFO] - Paso 2: Validando el título general de la aplicación web
+2026-09-30 21:44:58 - [INFO] - Paso 3: Verificando visibilidad del menú lateral y la sección de productos
+2026-09-30 21:45:00 - [INFO] - Paso 4: Leyendo la información del primer ítem en pantalla
+2026-09-30 21:45:00 - [INFO] - Producto detectado: 'Sauce Labs Backpack' | Precio: $29.99
+2026-09-30 21:45:00 - [INFO] - ✓ Test 02 - Navegación y Catálogo: Completado correctamente.
+2026-09-30 21:45:02 - [INFO] - Cerrando sesión de navegador.
+2026-09-30 21:45:04 - [INFO] - Iniciando instancia de navegador Chrome...
+2026-09-30 21:45:06 - [INFO] - Paso 1: Iniciando sesión de usuario
+2026-09-30 21:45:08 - [INFO] - Paso 2: Agregando el primer producto al carrito de compras
+2026-09-30 21:45:10 - [INFO] - Paso 3: Verificando actualización del contador en la insignia del carrito
+2026-09-30 21:45:10 - [INFO] - Paso 4: Navegando al detalle del carrito (/cart.html)
+2026-09-30 21:45:12 - [INFO] - Paso 5: Confirmando presencia del producto dentro de la lista de compra
+2026-09-30 21:45:12 - [INFO] - ✓ Test 03 - Interacción con Carrito: Completado correctamente.
+2026-09-30 21:45:14 - [INFO] - Cerrando sesión de navegador.
+2026-09-30 22:00:43 - [INFO] - Iniciando instancia de navegador Chrome...
+2026-09-30 22:00:44 - [INFO] - Paso 1: Ingresando a la página de login de SauceDemo
+2026-09-30 22:00:46 - [INFO] - Paso 2: Completando el formulario con el usuario 'standard_user'
+2026-09-30 22:00:47 - [INFO] - Paso 3: Enviando credenciales
+2026-09-30 22:00:48 - [INFO] - Paso 4: Verificando ingreso a la URL del inventario
+2026-09-30 22:00:48 - [INFO] - ✓ Test 01 - Login Exitoso: Completado correctamente.
+2026-09-30 22:00:48 - [INFO] - Cerrando sesión de navegador.
+2026-09-30 22:00:50 - [INFO] - Iniciando instancia de navegador Chrome...
+2026-09-30 22:00:52 - [INFO] - Paso 1: Iniciando sesión previa para inspeccionar catálogo
+2026-09-30 22:00:53 - [INFO] - Paso 2: Validando el título general de la aplicación web
+2026-09-30 22:00:53 - [INFO] - Paso 3: Verificando visibilidad del menú lateral y la sección de productos
+2026-09-30 22:00:53 - [INFO] - Paso 4: Leyendo la información del primer ítem en pantalla
+2026-09-30 22:00:53 - [INFO] - Producto detectado: 'Sauce Labs Backpack' | Precio: $29.99
+2026-09-30 22:00:53 - [INFO] - ✓ Test 02 - Navegación y Catálogo: Completado correctamente.
+2026-09-30 22:00:53 - [INFO] - Cerrando sesión de navegador.
+2026-09-30 22:00:55 - [INFO] - Iniciando instancia de navegador Chrome...
+2026-09-30 22:00:57 - [INFO] - Paso 1: Iniciando sesión de usuario
+2026-09-30 22:00:58 - [INFO] - Paso 2: Agregando el primer producto al carrito de compras
+2026-09-30 22:00:58 - [INFO] - Paso 3: Verificando actualización del contador en la insignia del carrito
+2026-09-30 22:00:58 - [INFO] - Paso 4: Navegando al detalle del carrito (/cart.html)
+2026-09-30 22:00:58 - [INFO] - Paso 5: Confirmando presencia del producto dentro de la lista de compra
+2026-09-30 22:00:58 - [INFO] - ✓ Test 03 - Interacción con Carrito: Completado correctamente.
+2026-09-30 22:00:58 - [INFO] - Cerrando sesión de navegador.

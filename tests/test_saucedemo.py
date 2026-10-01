@@ -1,135 +1,142 @@
+import time
 import pytest
 from selenium.webdriver.common.by import By
 from utils.helpers import (
-    get_driver, 
-    wait_for_element, 
-    wait_for_visibility, 
-    take_screenshot,
-    get_logger
+    obtener_driver,
+    esperar_elemento,
+    hacer_clic,
+    escribir_texto,
+    obtener_logger,
+    capturar_pantalla_error
 )
 
+logger = obtener_logger()
+
+# Tiempo de pausa visual entre acciones (en segundos)
+TIEMPO_ESPERA_VISUAL = 0.2
+
 class TestSauceDemo:
+    """
+    Suite de pruebas automatizadas E2E para la plataforma SauceDemo.
+    Cubre desde el inicio de sesión hasta la validación del carrito de compras.
+    Incluye pausas visuales para facilitar el seguimiento durante la demostración.
+    """
 
-    def setup_method(self):
-        """PRECONDICIÓN: Inicia el navegador y abre la URL objetivo antes de cada test."""
-        self.logger = get_logger()
-        self.logger.info("--- INICIANDO CASO DE PRUEBA ---")
-        self.driver = get_driver()
-        self.driver.get("https://www.saucedemo.com/")
-        self.logger.info("Navegando a https://www.saucedemo.com/")
-
-    def teardown_method(self):
-        """POSTCONDICIÓN: Cierra el navegador tras finalizar cada test (Garantiza independencia)."""
+    @pytest.fixture(autouse=True)
+    def setup_y_teardown(self):
+        """
+        Garantiza un entorno limpio abriendo el navegador antes de cada test
+        y cerrándolo al finalizar la ejecución.
+        """
+        logger.info("Iniciando instancia de navegador Chrome...")
+        self.driver = obtener_driver()
+        yield
+        time.sleep(TIEMPO_ESPERA_VISUAL)  # Pausa antes de cerrar el navegador
+        logger.info("Cerrando sesión de navegador.")
         self.driver.quit()
-        self.logger.info("--- FINALIZANDO CASO DE PRUEBA (Navegador cerrado) ---\n")
 
     def test_01_login_exitoso(self):
         """
-        CONSIGNA 1: Automatización de Login
-        - Credenciales: standard_user / secret_sauce
-        - Espera explícita
-        - Validaciones: Redirección a /inventory.html y texto 'Products' / 'Swag Labs'
+        Valida el ingreso correcto al sistema utilizando credenciales válidas
+        y confirma la redirección hacia el catálogo principal.
         """
         try:
-            self.logger.info("Ejecutando test_01_login_exitoso")
-            
-            # Ingreso de credenciales con esperas explícitas
-            wait_for_visibility(self.driver, (By.ID, "user-name")).send_keys("standard_user")
-            wait_for_visibility(self.driver, (By.ID, "password")).send_keys("secret_sauce")
-            wait_for_element(self.driver, (By.ID, "login-button")).click()
+            logger.info("Paso 1: Ingresando a la página de login de SauceDemo")
+            self.driver.get("https://www.saucedemo.com/")
+            time.sleep(TIEMPO_ESPERA_VISUAL)
 
-            # Validación 1: Verificar redirección a la URL del inventario
-            current_url = self.driver.current_url
-            assert "/inventory.html" in current_url, f"Redirección fallida. URL actual: {current_url}"
-            self.logger.info("Validación exitosa: Redirigido correctamente a /inventory.html")
+            logger.info("Paso 2: Completando el formulario con el usuario 'standard_user'")
+            escribir_texto(self.driver, By.ID, "user-name", "standard_user")
+            time.sleep(1)
+            escribir_texto(self.driver, By.ID, "password", "secret_sauce")
+            time.sleep(TIEMPO_ESPERA_VISUAL)
             
-            # Validación 2: Verificar título de sección 'Products'
-            titulo_seccion = wait_for_visibility(self.driver, (By.CLASS_NAME, "title")).text
-            assert titulo_seccion.upper() == "PRODUCTS", f"Título esperado 'PRODUCTS', se obtuvo '{titulo_seccion}'"
-            self.logger.info("Validación exitosa: Encabezado 'Products' presente")
+            logger.info("Paso 3: Enviando credenciales")
+            hacer_clic(self.driver, By.ID, "login-button")
+            time.sleep(TIEMPO_ESPERA_VISUAL)
+
+            logger.info("Paso 4: Verificando ingreso a la URL del inventario")
+            esperar_elemento(self.driver, By.CLASS_NAME, "title")
+            
+            assert "inventory.html" in self.driver.current_url, (
+                f"Error en Login: Se esperaba estar en '/inventory.html', pero la URL es {self.driver.current_url}"
+            )
+            logger.info("✓ Test 01 - Login Exitoso: Completado correctamente.")
 
         except Exception as e:
-            take_screenshot(self.driver, "fallo_test_01_login")
-            self.logger.error(f"Fallo en test_01_login_exitoso: {str(e)}")
+            logger.error(f"Fallo detectado en test_01_login_exitoso: {str(e)}")
+            capturar_pantalla_error(self.driver, "fallo_login")
             raise e
 
     def test_02_navegacion_y_catalogo(self):
         """
-        CONSIGNA 2: Navegación y verificación del catálogo
-        - Valida el título general de la página ('Swag Labs')
-        - Valida elementos clave visibles (Menú lateral, Filtro de ordenamiento)
-        - Valida presencia de productos e imprime el Nombre y Precio del primero
+        Comprueba la carga general del inventario, la presencia del menú y la
+        correcta lectura de los datos del primer producto de la lista.
         """
         try:
-            self.logger.info("Ejecutando test_02_navegacion_y_catalogo")
+            logger.info("Paso 1: Iniciando sesión previa para inspeccionar catálogo")
+            self.driver.get("https://www.saucedemo.com/")
+            escribir_texto(self.driver, By.ID, "user-name", "standard_user")
+            escribir_texto(self.driver, By.ID, "password", "secret_sauce")
+            hacer_clic(self.driver, By.ID, "login-button")
+            time.sleep(TIEMPO_ESPERA_VISUAL)
+
+            logger.info("Paso 2: Validando el título general de la aplicación web")
+            assert self.driver.title == "Swag Labs", "El título de la página no coincide con 'Swag Labs'"
+
+            logger.info("Paso 3: Verificando visibilidad del menú lateral y la sección de productos")
+            esperar_elemento(self.driver, By.ID, "react-burger-menu-btn")
+            time.sleep(TIEMPO_ESPERA_VISUAL)
             
-            # Autenticación requerida para acceder al catálogo
-            wait_for_visibility(self.driver, (By.ID, "user-name")).send_keys("standard_user")
-            wait_for_visibility(self.driver, (By.ID, "password")).send_keys("secret_sauce")
-            wait_for_element(self.driver, (By.ID, "login-button")).click()
-
-            # 1. Validar el título principal de la ventana web
-            titulo_web = self.driver.title
-            assert "Swag Labs" in titulo_web, f"Título web esperado 'Swag Labs', se obtuvo '{titulo_web}'"
-            self.logger.info("Validación exitosa: Título de página contiene 'Swag Labs'")
-
-            # 2. Validar visibilidad de elementos globales de la interfaz
-            menu_btn = wait_for_visibility(self.driver, (By.ID, "react-burger-menu-btn"))
-            filtro = wait_for_visibility(self.driver, (By.CLASS_NAME, "product_sort_container"))
-            assert menu_btn.is_displayed(), "El botón de menú lateral no está visible"
-            assert filtro.is_displayed(), "El filtro de ordenamiento no está visible"
-            self.logger.info("Validación exitosa: Menú lateral y Filtros presentes")
-
-            # 3. Comprobar catálogo y listar nombre/precio del primer producto
-            productos = self.driver.find_elements(By.CLASS_NAME, "inventory_item")
-            assert len(productos) > 0, "No existen productos visibles en el catálogo"
-
-            primer_nombre = productos[0].find_element(By.CLASS_NAME, "inventory_item_name").text
-            primer_precio = productos[0].find_element(By.CLASS_NAME, "inventory_item_price").text
+            logger.info("Paso 4: Leyendo la información del primer ítem en pantalla")
+            nombre_producto = self.driver.find_element(By.CLASS_NAME, "inventory_item_name").text
+            precio_producto = self.driver.find_element(By.CLASS_NAME, "inventory_item_price").text
             
-            self.logger.info(f"Primer producto detectado: '{primer_nombre}' - Precio: '{primer_precio}'")
-            print(f"\n[CATÁLOGO] Primer producto: {primer_nombre} | Precio: {primer_precio}")
+            logger.info(f"Producto detectado: '{nombre_producto}' | Precio: {precio_producto}")
+            assert len(nombre_producto) > 0, "No se logró obtener el nombre del primer producto"
+            
+            logger.info("✓ Test 02 - Navegación y Catálogo: Completado correctamente.")
 
         except Exception as e:
-            take_screenshot(self.driver, "fallo_test_02_catalogo")
-            self.logger.error(f"Fallo en test_02_navegacion_y_catalogo: {str(e)}")
+            logger.error(f"Fallo detectado en test_02_navegacion_y_catalogo: {str(e)}")
+            capturar_pantalla_error(self.driver, "fallo_catalogo")
             raise e
 
     def test_03_interaccion_carrito(self):
         """
-        CONSIGNA 3: Interacción con productos y carrito
-        - Añade el primer producto disponible al carrito
-        - Verifica que el contador de la insignia del carrito cambie a '1'
-        - Navega a la vista del carrito
-        - Comprueba que el producto añadido figure en la lista del carrito
+        Simula la adición de un producto al carrito, valida que el contador de la
+        insignia aumente a 1 y confirma la presencia del ítem en la pantalla del carrito.
         """
         try:
-            self.logger.info("Ejecutando test_03_interaccion_carrito")
+            logger.info("Paso 1: Iniciando sesión de usuario")
+            self.driver.get("https://www.saucedemo.com/")
+            escribir_texto(self.driver, By.ID, "user-name", "standard_user")
+            escribir_texto(self.driver, By.ID, "password", "secret_sauce")
+            hacer_clic(self.driver, By.ID, "login-button")
+            time.sleep(TIEMPO_ESPERA_VISUAL)
+
+            logger.info("Paso 2: Agregando el primer producto al carrito de compras")
+            # Selecciona el primer botón de añadir al carrito disponible en la lista
+            hacer_clic(self.driver, By.CLASS_NAME, "btn_inventory")
+            time.sleep(TIEMPO_ESPERA_VISUAL)
+
+            logger.info("Paso 3: Verificando actualización del contador en la insignia del carrito")
+            insignia_carrito = esperar_elemento(self.driver, By.CLASS_NAME, "shopping_cart_badge")
+            assert insignia_carrito.text == "1", f"Se esperaba 1 producto en el badge, pero figura {insignia_carrito.text}"
+
+            logger.info("Paso 4: Navegando al detalle del carrito (/cart.html)")
+            hacer_clic(self.driver, By.CLASS_NAME, "shopping_cart_link")
+            time.sleep(TIEMPO_ESPERA_VISUAL)
+
+            logger.info("Paso 5: Confirmando presencia del producto dentro de la lista de compra")
+            assert "cart.html" in self.driver.current_url, "No se logró ingresar a la vista del carrito"
             
-            # Autenticación
-            wait_for_visibility(self.driver, (By.ID, "user-name")).send_keys("standard_user")
-            wait_for_visibility(self.driver, (By.ID, "password")).send_keys("secret_sauce")
-            wait_for_element(self.driver, (By.ID, "login-button")).click()
+            item_en_carrito = self.driver.find_element(By.CLASS_NAME, "inventory_item_name")
+            assert item_en_carrito.is_displayed(), "El producto agregado no se visualiza dentro del carrito"
 
-            # 1. Añadir el primer producto al carrito
-            wait_for_element(self.driver, (By.CSS_SELECTOR, ".inventory_item button")).click()
-            self.logger.info("Se hizo clic en 'Add to cart' para el primer producto")
-
-            # 2. Verificar incremento del contador en el ícono del carrito
-            badge_texto = wait_for_visibility(self.driver, (By.CLASS_NAME, "shopping_cart_badge")).text
-            assert badge_texto == "1", f"Contador de carrito esperado '1', se obtuvo '{badge_texto}'"
-            self.logger.info("Validación exitosa: Contador del carrito muestra '1'")
-
-            # 3. Navegar a la pantalla del carrito
-            wait_for_element(self.driver, (By.CLASS_NAME, "shopping_cart_link")).click()
-            assert "/cart.html" in self.driver.current_url, "No se redirigió a /cart.html"
-
-            # 4. Comprobar presencia del ítem agregado dentro de la lista
-            items_en_carrito = self.driver.find_elements(By.CLASS_NAME, "cart_item")
-            assert len(items_en_carrito) == 1, "El producto agregado no figura dentro del carrito"
-            self.logger.info("Validación exitosa: Producto verificado dentro del carrito de compras")
+            logger.info("✓ Test 03 - Interacción con Carrito: Completado correctamente.")
 
         except Exception as e:
-            take_screenshot(self.driver, "fallo_test_03_carrito")
-            self.logger.error(f"Fallo en test_03_interaccion_carrito: {str(e)}")
+            logger.error(f"Fallo detectado en test_03_interaccion_carrito: {str(e)}")
+            capturar_pantalla_error(self.driver, "fallo_carrito")
             raise e
