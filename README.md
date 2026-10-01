@@ -1,117 +1,71 @@
-Proyecto de Automatización de Pruebas - SauceDemo
+# Pre-Entrega Automation Testing - Erika Silverio
 
-¡Hola! Te doy la bienvenida a mi repositorio de la Pre-Entrega del curso de Automation Testing.
+Proyecto de automatización de pruebas End-to-End (E2E) desarrollado para la plataforma SauceDemo (www.saucedemo.com). El objetivo principal es validar los flujos fundamentales de navegación, autenticación de usuario y gestión del carrito de compras.
 
-En este proyecto desarrollé una suite de pruebas automatizadas End-to-End (E2E) para evaluar el funcionamiento de la tienda virtual SauceDemo. El objetivo principal es verificar que los flujos básicos y críticos de la plataforma funcionen sin problemas, desde el acceso con credenciales hasta la revisión de productos en el carrito de compras.
+---
 
-Herramientas y Tecnologías
+## 🛠️ Tecnologías Requeridas
+* **Lenguaje principal:** Python 3.14
+* **Herramienta de automatización:** Selenium WebDriver (Selenium 4 con Selenium Manager)
+* **Framework de pruebas:** Pytest
+* **Generación de reportes:** Pytest-HTML
+* **Control de versiones:** Git y GitHub
 
-Para construir esta solución elegí un stack sencillo pero potente dentro del ecosistema de testing con Python:
+---
 
-Python 3.14+: Lenguaje base para escribir la lógica de automatización.
-
-Selenium WebDriver (v4): Utilizado para controlar las interacciones con el navegador de manera dinámica.
-
-Pytest: Framework principal para estructurar, organizar y ejecutar los casos de prueba.
-
-pytest-html: Extensión para generar reportes visuales de la ejecución en formato HTML.
-
-Git & GitHub: Control de versiones y alojamiento del proyecto.
-
-¿Cómo está organizado el proyecto?
-
-Estructuré el código separando la lógica de pruebas de las funciones auxiliares para mantener todo ordenado, mantenible y fácil de escalar:
+## 📂 Estructura del Proyecto
 
 pre-entrega-automation-testing-erika-silverio/
 │
 ├── tests/
-│   └── test_saucedemo.py       # Suite principal de pruebas (Login, Catálogo, Carrito)
+│   └── test_saucedemo.py       # Casos de prueba (Login, Catálogo y Carrito)
 │
 ├── utils/
-│   ├── __init__.py             # Indica a Python que la carpeta es un paquete
-│   └── helpers.py              # Funciones auxiliares (esperas explícitas, logs, navegador)
+│   ├── __init__.py             # Identificador de paquete
+│   └── helpers.py              # Funciones auxiliares (driver, esperas explícitas, logs, capturas)
 │
 ├── reports/
-│   ├── reporte.html            # Reporte visual generado tras correr las pruebas
-│   └── ejecucion.log           # Historial de eventos guardados paso a paso
+│   ├── reporte.html            # Reporte visual en HTML
+│   └── ejecucion.log           # Log detallado de la suite
 │
-├── pytest.ini                  # Archivo de configuración global de Pytest
-├── requirements.txt            # Lista de dependencias del entorno
-└── README.md                   # Documentación general del repositorio
+├── pytest.ini                  # Configuración global de Pytest y PYTHONPATH
+├── requirements.txt            # Lista de dependencias
+└── README.md                   # Documentación del proyecto
 
+---
 
-Casos de Prueba Automatizados
+## 🚀 Pasos para Instalación y Configuración
 
-La suite cubre 3 flujos clave de la plataforma:
+1. **Clonar el repositorio:**
+   git clone https://github.com/erikasilverio/pre-entrega-automation-testing-erika-silverio.git
+   cd pre-entrega-automation-testing-erika-silverio
 
-test_01_login_exitoso:
+2. **Crear y activar el entorno virtual:**
+   * **En Windows (PowerShell):**
+     python -m venv venv
+     .\venv\Scripts\activate
 
-Navega a la pantalla de inicio de sesión.
+   * **En Mac / Linux:**
+     python3 -m venv venv
+     source venv/bin/activate
 
-Ingresa las credenciales válidas (standard_user / secret_sauce).
+3. **Instalar dependencias necesarias:**
+   pip install pytest selenium pytest-html
 
-Valida que el sistema permita el ingreso y redirija a la página de inventario (/inventory.html).
+---
 
-test_02_navegacion_y_catalogo:
+##  Ejecución de Pruebas
 
-Inicia sesión y verifica que el título de la página sea "Swag Labs".
-
-Confirma que el menú lateral y la grilla de productos estén presentes.
-
-Lee e imprime en consola los datos (nombre y precio) del primer producto visible.
-
-test_03_interaccion_carrito:
-
-Añade el primer producto de la lista al carrito de compras.
-
-Verifica que la insignia (badge) del carrito actualice su contador a "1".
-
-Entra a la vista del carrito (/cart.html) y confirma que el producto seleccionado se encuentre ahí.
-
-¿Cómo ejecutar las pruebas en tu máquina?
-
-Sigue estos sencillos pasos para clonar el proyecto y correr las pruebas en tu entorno local:
-
-1. Clonar el repositorio
-
-Abre tu terminal y ejecuta:
-
-git clone https://github.com/erikasilverio/pre-entrega-automation-testing-erika-silverio.git
-cd pre-entrega-automation-testing-erika-silverio
-
-
-2. Crear y activar un entorno virtual (Recomendado)
-
-En Windows:
-
-python -m venv venv
-.\venv\Scripts\activate
-
-
-En Mac/Linux:
-
-python3 -m venv venv
-source venv/bin/activate
-
-
-3. Instalar las dependencias
-
-pip install pytest selenium pytest-html
-
-
-4. Ejecutar la suite de pruebas
-
-Puedes lanzar las pruebas y generar el reporte HTML en la carpeta reports/ corriendo un solo comando:
+Para correr toda la suite de pruebas y generar automáticamente el reporte en formato HTML, ejecuta el siguiente comando en la terminal:
 
 python -m pytest tests/test_saucedemo.py -v --html=reports/reporte.html --self-contained-html
 
+---
 
-Reportes y Manejo de Evidencias
+##  Evidencias de Ejecución
 
-Reporte HTML: Una vez terminada la ejecución, puedes abrir el archivo reports/reporte.html en cualquier navegador para ver el resultado detallado de cada test.
+* **Reporte HTML:** Se genera de forma automática en la carpeta `reports/reporte.html` tras finalizar la ejecución.
+* **Logs de ejecución:** Registro detallado de cada paso guardado en `reports/ejecucion.log`.
+* **Capturas de pantalla:** En caso de producirse un error durante los tests, el sistema guardará automáticamente una evidencia en imagen dentro de la carpeta `reports/`.
 
-Logs de ejecución: Todas las acciones realizadas quedan registradas cronológicamente en el archivo reports/ejecucion.log.
-
-Capturas de pantalla: Si algún test llega a fallar durante la ejecución, el script tomará automáticamente una captura en formato .png y la guardará dentro de la carpeta reports/ para facilitar la investigación de errores.
-
-Desarrollado por Erika Silverio.
+* ## Erika Silverio
