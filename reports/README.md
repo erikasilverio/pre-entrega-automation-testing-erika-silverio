@@ -43,6 +43,8 @@ La suite de pruebas está dividida en 3 casos de prueba independientes y automat
 3. Revisar Resultados -->  Abrir reports/reporte.html
 
 
+
+
 --------------
 
 
