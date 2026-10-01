@@ -39,36 +39,10 @@ La suite de pruebas está dividida en 3 casos de prueba independientes y automat
 
 ---
 1. Abrir Terminal       
-
-2. Activar Entorno  -->  .\venv\Scripts\activate  (Windows)
-
-
-3. Instalar Paquetes -->  python -m pip install -r requirements.txt
-
-
-4. Ejecutar Pruebas -->  pytest tests/test_saucedemo.py -v --html=reports/reporte.html
-
-
-5. Revisar Resultados -->  Abrir reports/reporte.html
+2. Ejecutar Pruebas -->  pytest tests/test_saucedemo.py -v --html=reports/reporte.html
+3. Revisar Resultados -->  Abrir reports/reporte.html
 
 
 --------------
-
-## 📂 Estructura del Proyecto
-
-```text
-pre-entrega-automation-testing-erika-silverio/
-├── tests/
-│   └── test_saucedemo.py      # Casos de prueba (Login, Catálogo, Carrito)
-├── utils/
-│   └── helpers.py            # Esperas explícitas, logger y screenshots
-├── datos/                    # Carpeta reservada para datos de entrada
-├── reports/
-│   ├── reporte.html          # Reporte ejecutable generado por Pytest
-│   └── ejecucion.log         # Archivo de logs de ejecución
-├── pytest.ini                # Configuración global de Pytest
-├── requirements.txt          # Dependencias exactas
-└── README.md                 # Documentación explicativa
-
 
 
