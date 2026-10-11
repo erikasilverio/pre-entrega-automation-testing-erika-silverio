@@ -14,8 +14,6 @@ Proyecto de automatización de pruebas End-to-End (E2E) desarrollado para la pla
 ---
 
 
----
-
 ##  Ejecución de Pruebas
 
 Para correr toda la suite de pruebas y generar automáticamente el reporte en formato HTML, ejecuta el siguiente comando en la terminal:
@@ -30,4 +28,4 @@ python -m pytest tests/test_saucedemo.py -v --html=reports/reporte.html --self-c
 * **Logs de ejecución:** Registro detallado de cada paso guardado en `reports/ejecucion.log`.
 * **Capturas de pantalla:** En caso de producirse un error durante los tests, el sistema guardará automáticamente una evidencia en imagen dentro de la carpeta `reports/`.
 
-* *Erika Silverio*
+*Erika Silverio*
