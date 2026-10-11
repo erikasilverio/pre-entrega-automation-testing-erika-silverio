@@ -13,23 +13,6 @@ Proyecto de automatización de pruebas End-to-End (E2E) desarrollado para la pla
 
 ---
 
-##  Pasos para Instalación y Configuración
-
-1. **Clonar el repositorio:**
-   git clone https://github.com/erikasilverio/pre-entrega-automation-testing-erika-silverio.git
-   cd pre-entrega-automation-testing-erika-silverio
-
-2. **Crear y activar el entorno virtual:**
-   * **En Windows (PowerShell):**
-     python -m venv venv
-     .\venv\Scripts\activate
-
-   * **En Mac / Linux:**
-     python3 -m venv venv
-     source venv/bin/activate
-
-3. **Instalar dependencias necesarias:**
-   pip install pytest selenium pytest-html
 
 ---
 
